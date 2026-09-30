@@ -1,0 +1,23 @@
+{
+  "name": "bookmyshow-concurrency-backend",
+  "version": "1.0.0",
+  "description": "BookMyShow-scale ticketing backend with high-concurrency seat locking, timed hold expiry, and idempotent payment webhooks.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node test/load_test.js"
+  },
+  "keywords": [
+    "bookmyshow",
+    "concurrency",
+    "redis",
+    "mysql",
+    "locking",
+    "idempotency"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
