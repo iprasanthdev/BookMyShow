@@ -40,6 +40,7 @@ BookMyShow/
   - **Redis 2-Phase Timed Seat Hold Protocol**: In-memory atomic SETNX lock + 600s TTL expiry worker.
   - **Hard Database Safety**: `UNIQUE KEY (show_id, seat_id)` physically prevents double-booking even if application cache fails.
   - **Idempotent Webhooks**: Unique constraint `UNIQUE (transaction_id, event_type)` ensures network retries cause zero duplicate updates.
+  - **End-to-End HTTP Load & Concurrency Harness**: Dynamic HTTP server load runner with realistic skewed seat choices (hotspot contention), per-request latencies, setup/teardown state isolation, and machine-verifiable exit codes.
 
 ### Task P2: Per-Theatre Per-Date Showtimes Query
 - Executable MySQL query retrieving all scheduled shows for a target theatre on a specific date (e.g. today or next 7 days).

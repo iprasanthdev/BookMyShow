@@ -175,6 +175,23 @@ class BMSDatabaseEngine {
         }
         return results.sort((a, b) => a.start_time.localeCompare(b.start_time));
     }
+
+    /**
+     * Public fixture reset method to reset transactional state between tests.
+     */
+    resetState() {
+        this.bookings.clear();
+        this.paymentWebhooks.clear();
+        this.autoIds.booking = 1;
+        this.autoIds.webhook = 1;
+
+        for (const ss of this.showSeats.values()) {
+            ss.status = 'AVAILABLE';
+            ss.booking_id = null;
+            ss.hold_expires_at = null;
+            ss.version = 1;
+        }
+    }
 }
 
 const dbInstance = new BMSDatabaseEngine();

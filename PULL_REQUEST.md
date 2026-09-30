@@ -30,30 +30,39 @@ Running `npm test` yields the following verified output:
 
 ```
 ================================================================
-🚀 STARTING BOOKMYSHOW BACKEND LOAD & CONCURRENCY TEST SUITE
+🚀 STARTING BOOKMYSHOW END-TO-END HTTP CONCURRENCY TEST SUITE
 ================================================================
 
-TEST 1: High Concurrency Flash-Sale (1,000 Users Competing for 50 Seats)
-📊 PERFORMANCE RESULTS:
-   - Total Requests Executed  : 1,000
-   - Execution Time           : 0.005 seconds
-   - Throughput (RPS)         : 200,000 req/sec
-   - p50 / p95 / p99 Latency  : 5 ms / 5 ms / 5 ms
+📡 HTTP Server active on dynamic port 55182
+----------------------------------------------------------------
+TEST 1: High Concurrency Flash-Sale (1,000 Users over HTTP API)
+----------------------------------------------------------------
+📊 PERFORMANCE & LATENCY RESULTS (Per-Request HTTP Metrics):
+   - Total HTTP Requests      : 1,000
+   - Execution Time           : 0.839 seconds
+   - Throughput (RPS)         : 1,191.90 req/sec
+   - Latency (p50 / p95 / p99): 28 ms / 152 ms / 396 ms
+   - Demand Hotspots (Top 5)  : Seat #8: 82 reqs, Seat #9: 81 reqs, Seat #6: 79 reqs...
 
-🔒 CONCURRENCY & LOCKING ACCURACY:
-   - Successful Seat Holds    : 50 (Expected 50)
-   - Rejected Seat Holds      : 950 (Expected 950)
+🔒 CONCURRENCY & DATA INTEGRITY VERIFICATION:
+   - HTTP 201 Created (Holds) : 50 (Expected 50)
+   - HTTP 409 Conflict (Rej)  : 950 (Expected 950)
+   - Unexpected Errors        : 0
+   - Unique Seats Reserved    : 50
+   - Seats HELD in API Layout : 50
    - DOUBLE BOOKINGS DETECTED : ✅ ZERO DOUBLE BOOKINGS (PASSED)
+   - DEEP INVARIANTS VALID    : ✅ PASSED
 
 TEST 2: Timed Seat Hold Auto-Release Verification (Short TTL)
-   - Reverted seat state back to AVAILABLE on timer expiry cleanly.
-   - ✅ TEST 2 PASSED: Hold released automatically with zero lost holds!
+   - Reverted seat state back to AVAILABLE on timer expiry cleanly via HTTP layout.
+   - ✅ TEST 2 PASSED: Hold released automatically on TTL expiry with zero lost holds!
 
-TEST 3: Payment Webhook Idempotency Verification (20 Duplicate Requests)
-   - Webhook Requests Executed: 20
-   - Confirmed Executions      : 1
-   - Duplicates Ignored        : 19
-   - ✅ TEST 3 PASSED: Payment webhook idempotency fully proven!
+TEST 3: Payment Webhook Idempotency Verification (20 Concurrent HTTP Retries)
+   - HTTP Webhooks Executed   : 20
+   - Confirmed Executions     : 1 (Expected 1)
+   - Duplicates Ignored       : 19 (Expected 19)
+   - Persistent Audit Entries  : 1 (Expected 1)
+   - ✅ TEST 3 PASSED: Payment webhook idempotency fully proven over persistent HTTP boundary!
 ```
 
 ---

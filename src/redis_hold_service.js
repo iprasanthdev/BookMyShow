@@ -174,6 +174,17 @@ class RedisHoldService {
             }
         }, 1000);
     }
+
+    /**
+     * Public fixture reset method to clear all Redis hold keys and active timers.
+     */
+    clearAllHolds() {
+        this.redisStore.clear();
+        for (const timerId of this.timers.values()) {
+            clearTimeout(timerId);
+        }
+        this.timers.clear();
+    }
 }
 
 const redisHoldService = new RedisHoldService();
